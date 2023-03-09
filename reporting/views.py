@@ -100,25 +100,25 @@ def dashboard(request):
 
 
 
-
 def dashboard(request):
     if request.method == 'POST':
+        # Retrieve the minimum and maximum values from the form
         min_amount = request.POST.get('min_amount')
         max_amount = request.POST.get('max_amount')
+        
+        # Check if both values are present in the form
         if min_amount and max_amount:
+            # Filter the customers based on the total job line item amount remaining to be invoiced
             customers = Customer.objects.annotate(
                 total_remaining=Sum('job__line_items__amount', filter=~Q(job__line_items__invoice=None)) - 
                                 Sum('job__line_items__invoice__amount')
             ).filter(total_remaining__gte=min_amount, total_remaining__lte=max_amount)
         else:
-            customers = Customer.objects.annotate(
-                total_remaining=Sum('job__line_items__amount', filter=~Q(job__line_items__invoice=None)) - 
-                                Sum('job__line_items__invoice__amount')
-            )
+            # If the minimum and maximum values are not present, retrieve all customers
+            customers = Customer.objects.all()
     else:
-        customers = Customer.objects.annotate(
-            total_remaining=Sum('job__line_items__amount', filter=~Q(job__line_items__invoice=None)) - 
-                            Sum('job__line_items__invoice__amount')
-        )
+        # If the request method is GET, retrieve all customers
+        customers = Customer.objects.all()
+        
     context = {'customers': customers}
     return render(request, 'dashboard.html', context)
