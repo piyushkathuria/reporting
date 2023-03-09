@@ -1,25 +1,33 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 
 {% block content %}
-  <h1>Dashboard</h1>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>&nbsp; Total Job Amount &nbsp;</th>
-        <th>&nbsp;	Total Invoice Amount &nbsp;</th>
-        <th>&nbsp; Remaining Invoice Amount &nbsp;</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for business in businesses %}
-        <tr>
-          <td>{{ business.name }}</td>
-          <td>{{ business.total_job_amount }}</td>
-          <td>{{ business.total_invoice_amount }}</td>
-          <td>{{ business.remaining_invoice_amount }}</td>
-        </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+    <h1>Dashboard</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="min_amount">Minimum Amount:</label>
+        <input type="number" name="min_amount" id="min_amount">
+        <label for="max_amount">Maximum Amount:</label>
+        <input type="number" name="max_amount" id="max_amount">
+        <button type="submit">Filter</button>
+    </form>
+    <table>
+        <thead>
+            <tr>
+                <th>Name &nbsp;</th>
+                <th>&nbsp; Total Job Amount &nbsp;</th>
+                <th>&nbsp; Amount Remaining to be Invoiced &nbsp;</th>
+                <th>&nbsp; Total Invoice Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for customer in customers %}
+                <tr>
+                    <td>{{ customer.name }}</td>
+                    <td>{{ customer.total_job_amount }}</td>
+                    <td>{{ customer.total_remaining_amount }}</td>
+                    <td>{{ customer.total_invoice_amount }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}
