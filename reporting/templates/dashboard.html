@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Dashboard</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>&nbsp; Total Job Amount &nbsp;</th>
+        <th>&nbsp;	Total Invoice Amount &nbsp;</th>
+        <th>&nbsp; Remaining Invoice Amount &nbsp;</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for business in businesses %}
+        <tr>
+          <td>{{ business.name }}</td>
+          <td>{{ business.total_job_amount }}</td>
+          <td>{{ business.total_invoice_amount }}</td>
+          <td>{{ business.remaining_invoice_amount }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

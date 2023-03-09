@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>All Customers</h1>
+  <ul>
+    {% for customer in customers %}
+      <li>
+        {{ customer.name }} - 
+        {{ customer.email }} - 
+        {{ customer.phone }} - 
+        Total Job Amount: ${{ customer.total_job_amount }} - 
+        Total Job Amount Remaining: ${{ customer.total_job_amount_remaining }}
+      </li>
+    {% endfor %}
+    </ul>
+{% endblock %}
