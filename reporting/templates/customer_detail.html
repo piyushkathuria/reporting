@@ -1,0 +1,20 @@
+{% extends 'base.html' %} {% block content %}
+<p>Customer Name - {{customer.name}}</p>
+
+<h3>Invoices</h3>
+<ol>
+    {% for invoice in invoices %}
+    <li>
+        {{invoice.id}}
+    </li>
+    {% endfor%}
+</ol>
+
+<ul>
+    {% for payment in payments %}
+    <li>
+        {{payment.payment_type}} {{payment.payment_amount}}
+    </li>
+    {% endfor%}
+</ul>
+{% endblock %}
